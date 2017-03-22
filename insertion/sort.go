@@ -1,21 +1,26 @@
 package insertion
 
-func Sort(vals []int) {
-	// assume first is sorted as nothing to compare to thats why k=1
-	for k := 1; k < len(vals); k++ {
-		sorting := vals[k] // hold the val we are sorting
-		i := k             // we are going to count back so assign a new val
-		for i >= 0 {       // count back if we are at the start or the previous val is < than what we are sorting we are done
-			if i == 0 || vals[i-1] < sorting {
-				vals[i] = sorting
-				break
-			}
-			// assign the current val with the previous val (move it)
-			if vals[i-1] > sorting {
-				vals[i] = vals[i-1]
-				i--
-			}
+import "fmt"
 
+// Sort is an implementation of the insertion sort algorthem
+func Sort(arr []int) {
+	sorts := 0
+	// assume first element sorted so start at index 1 rather than 0
+	for i := 1; i < len(arr); i++ {
+		// start looking from the previous element
+		j := i - 1
+		// set a temp value for the element value we are sorting
+		value := arr[i]
+		// if our value is less than the previous value
+		for j >= 0 && value < arr[j] {
+			// move the previous value up one duplicating it across two spaces [j] and [j+1] which gives us a space to put the value in once we find the right place
+			arr[j+1] = arr[j]
+			sorts++
+			// decrement our counter and go again
+			j--
 		}
+		//we have now found an element that is >= value so add this value to space we created which is our current pos +1
+		arr[j+1] = value
 	}
+	fmt.Print(sorts)
 }
